@@ -3,97 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Using Function</title>
+    <title>Rock Paper Scissors</title>
     <style>
+        /* Body with vibrant gradient background */
         body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #ffecd2, #fcb69f);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ff4e50, #f9d423); /* Bright red to yellow */
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
             margin: 0;
+            color: #fff;
         }
 
+        /* Title */
         p {
             font-size: 3rem;
             text-align: center;
-            color: #333;
-            margin-bottom: 40px;
-            text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+            margin-bottom: 50px;
+            font-weight: bold;
+            text-shadow: 3px 3px 10px rgba(0,0,0,0.4);
         }
 
+        /* Container for buttons */
+        .button-container {
+            display: flex;
+            gap: 30px;
+        }
+
+        /* Buttons styling */
         button {
-            font-size: 1.8rem;
-            margin: 15px;
-            border-radius: 12px;
+            font-size: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border-radius: 15px;
             border: none;
-            padding: 15px 30px;
+            padding: 20px 25px;
             cursor: pointer;
             background: #fff;
-            box-shadow: 3px 3px 10px rgba(0,0,0,0.2);
+            box-shadow: 5px 5px 20px rgba(0,0,0,0.3);
             transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+            width: 160px;
         }
 
+        /* Button hover & active effects */
         button:hover {
-            transform: translateY(-3px);
-            box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
-            background: #f0f0f0;
+            transform: translateY(-5px);
+            box-shadow: 8px 8px 25px rgba(0,0,0,0.4);
+            background: #ffe066; /* Bright yellow hover */
         }
 
         button:active {
             transform: translateY(0);
-            box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+            box-shadow: 3px 3px 12px rgba(0,0,0,0.3);
+            background: #ffd633;
+        }
+
+        /* Images inside buttons */
+        button img {
+            width: 70px;
+            height: 70px;
         }
     </style>
 </head>
 <body>
     <p>Rock Paper Scissors</p>
-    <button onclick="
-        pick();
-        let result = '';
-        if(computerValue === 'Rock'){
-            result = `It's Tie`;
-        }
-        else if (computerValue === 'Paper'){
-            result = `You Lose`;
-        }
-        else if(computerValue === 'Scissors'){
-            result = `You Won`;
-        }
-        alert(`Computer result : ${computerValue}, ${result}`);
-    ">Rock</button>
+    <div class="button-container">
+        <button onclick="
+            pick();
+            let result = '';
+            if(computerValue === 'Rock'){
+                result = `It's Tie`;
+            }
+            else if (computerValue === 'Paper'){
+                result = `You Lose`;
+            }
+            else if(computerValue === 'Scissors'){
+                result = `You Won`;
+            }
+            alert(`Computer result : ${computerValue}, ${result}`);
+        ">
+            <img src="rock.png" alt="Rock">
+            Rock
+        </button>
 
-    <button onclick="
-        pick();
-        let result = '';
-        if(computerValue === 'Rock'){
-            result = `You Won`;
-        }
-        else if (computerValue === 'Paper'){
-            result = `It's Draw`;
-        }
-        else if(computerValue === 'Scissors'){
-            result = `You Lose`;
-        }
-        alert(`Computer result : ${computerValue}, ${result}`);
-    ">Paper</button>
+        <button onclick="
+            pick();
+            let result = '';
+            if(computerValue === 'Rock'){
+                result = `You Won`;
+            }
+            else if (computerValue === 'Paper'){
+                result = `It's Draw`;
+            }
+            else if(computerValue === 'Scissors'){
+                result = `You Lose`;
+            }
+            alert(`Computer result : ${computerValue}, ${result}`);
+        ">
+            <img src="paper.png" alt="Paper">
+            Paper
+        </button>
 
-    <button onclick="
-        pick();
-        let result = '';
-        if(computerValue === 'Rock'){
-            result = `You Won`;
-        }
-        else if (computerValue === 'Paper'){
-            result = `You Lose`;
-        }
-        else if(computerValue === 'Scissors'){
-            result = `It's Tie`;
-        }
-        alert(`Computer result : ${computerValue}, ${result}`);
-    ">Scissors</button>
+        <button onclick="
+            pick();
+            let result = '';
+            if(computerValue === 'Rock'){
+                result = `You Won`;
+            }
+            else if (computerValue === 'Paper'){
+                result = `You Lose`;
+            }
+            else if(computerValue === 'Scissors'){
+                result = `It's Tie`;
+            }
+            alert(`Computer result : ${computerValue}, ${result}`);
+        ">
+            <img src="scissors.png" alt="Scissors">
+            Scissors
+        </button>
+    </div>
 
     <script>
         let computerValue = '';
