@@ -3,229 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rock Paper Scissors - Object Version</title>
+    <title>Rock Paper Scissors - Clean UI</title>
 
     <style>
-        body {
-            margin: 0;
+        * {
             padding: 0;
-            font-family: Poppins, sans-serif;
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            margin: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             color: white;
-            min-height: 100vh;
+            padding-top: 40px;
         }
 
         h1 {
-            margin-top: 30px;
-            font-size: 2.5rem;
-            text-shadow: 0 0 10px rgba(0,0,0,0.5);
+            font-size: 3rem;
+            margin-bottom: 25px;
+            font-weight: 700;
+            text-shadow: 0 0 12px rgba(255,255,255,0.4);
         }
 
-        #display, #display1 {
-            width: 80%;
-            max-width: 500px;
+        /* Glass cards */
+        #display, 
+        #display1 {
+            width: 90%;
+            max-width: 600px;
             padding: 20px;
-            border-radius: 12px;
-            font-size: 1.2rem;
             margin-top: 15px;
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(6px);
-            box-shadow: 0 0 15px rgba(0,0,0,0.4);
+            background: rgba(255,255,255,0.12);
+            border-radius: 14px;
+            backdrop-filter: blur(8px);
+            font-size: 1.3rem;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
         }
 
-        /* Buttons container */
-        .btn-container {
+        /* Button layout */
+        .btn-area {
             margin-top: 40px;
             display: flex;
             gap: 25px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
-        /* Buttons */
-        button {
-            background: white;
+        /* Icon buttons */
+        .choice-btn {
+            background: rgba(255,255,255,0.9);
+            color: #222;
             border: none;
             border-radius: 20px;
-            width: 130px;
-            padding: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            width: 140px;
+            padding: 20px 10px;
             cursor: pointer;
             font-size: 1.1rem;
-            font-weight: bold;
-            color: #333;
-            transition: 0.25s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            transition: 0.25s ease;
+            text-align: center;
         }
 
-        button:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+        .choice-btn:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
         }
 
-        button img {
+        .choice-btn img {
             width: 60px;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
         }
 
-        /* Reset button */
+        /* Utility buttons */
+        .util-btn {
+            margin-top: 20px;
+            padding: 14px 25px;
+            font-size: 1.1rem;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            background: #00c3ff;
+            color: #000;
+            font-weight: bold;
+            transition: 0.25s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .util-btn:hover {
+            transform: translateY(-6px);
+            background: #00a0d6;
+        }
+
         #reset {
-            margin-top: 30px;
-            background: #ff5252;
+            background: #ff4747;
             color: white;
-            width: 200px;
         }
 
         #reset:hover {
-            background: #ff0000;
+            background: #ff1c1c;
         }
     </style>
 </head>
 
 <body>
+
+    <h1>Rock Paper Scissors</h1>
+
     <div id="display"></div>
     <div id="display1"></div>
-    <button
-    onclick="pickComputer();
-    pickUser('Rock');
-    // checkScore();
-    "><img src="rock.png">Rock</button>
 
-    <button 
-    onclick="pickComputer();
-    pickUser('Paper');
-    // checkScore();
-    "><img src="paper.png">Paper</button>
+    <!-- Buttons Section -->
+    <div class="btn-area">
+        <button class="choice-btn" onclick="pickComputer(); pickUser('Rock');">
+            <img src="rock.png" alt="">Rock
+        </button>
 
-    <button
-     onclick="pickComputer();
-    pickUser('Scissors');
-    // checkScore();
-    "><img src="scissors.png">Scissors</button>
+        <button class="choice-btn" onclick="pickComputer(); pickUser('Paper');">
+            <img src="paper.png" alt="">Paper
+        </button>
 
-    <button onclick="checkScore();"> Check Score</button>
+        <button class="choice-btn" onclick="pickComputer(); pickUser('Scissors');">
+            <img src="scissors.png" alt="">Scissors
+        </button>
+    </div>
 
-    <button
-    onclick="
-    ResetOut(); 
-    Score.scoreLose=Score.scoreTie=Score.scoreWin=0;
-    ">Reset</button>
+    <button class="util-btn" onclick="checkScore();">Check Score</button>
+
+    <button id="reset" class="util-btn"
+        onclick="ResetOut(); Score.scoreLose=Score.scoreTie=Score.scoreWin=0;">
+        Reset
+    </button>
 
     <script>
         //For Score
-        const Score = JSON.parse(localStorage.getItem('Score'));
-       /* {
-        scoreWin: 0,
-        scoreTie: 0,
-        scoreLose: 0
-        } */
-        
-        //For Computer Random Check
-        let computer ='', numberGenerate;;
-        function pickComputer () {
+        let Score = JSON.parse(localStorage.getItem('Score')) || {
+            scoreWin: 0,
+            scoreTie: 0,
+            scoreLose: 0
+        };
+
+        let computer = '', numberGenerate;
+        function pickComputer() {
             numberGenerate = Math.random();
-            if(numberGenerate >= 0 && numberGenerate <=1/3){
-                computer = 'Rock';
-                console.log(computer);
-            }
-            else if(numberGenerate >= 1/3 && numberGenerate <= 2/3){
-                computer = 'Paper';
-                console.log(computer);
-            }
-            else if(numberGenerate >= 2/3 && numberGenerate <= 1){
-                computer = 'Scissors';
-                console.log(computer);
-            }
+            if (numberGenerate <= 1/3) computer = 'Rock';
+            else if (numberGenerate <= 2/3) computer = 'Paper';
+            else computer = 'Scissors';
         }
 
-        let result ='';
-        function pickUser(value){
-        
-            //For Rock check
-            if(value === 'Rock'){
-                if(computer === 'Rock'){
-                    // scoreTie++;
-                    result = `It's Tie`;
-                    console.log(`Your's : ${value}, Computers : ${computer}, It's Tie`);    
-                }     
-                else  if(computer === 'Paper'){
-                    // scoreLose++;
-                    result = `You Lose`;
-                    console.log(`Your's : ${value}, Computers : ${computer}, You Lose`);
-                }   
-                else  if(computer === 'Scissors'){
-                    // scoreWin++;
-                    result = `You Won`;
-                    console.log(`Your's : ${value}, Computers :${computer}, You Won`);
-                }   
-            }
-            //For Paper Check
-             if(value === 'Paper'){
-                if(computer === 'Rock'){
-                    // scoreWin++;
-                    result = `You Won`;
-                    console.log(`Your's : ${value}, Computers : ${computer}, You Won`);
-                }     
-                else  if(computer === 'Paper'){
-                    // scoreTie++;
-                    result = `It's Tie`;
-                    console.log(`Your's : ${value}, Computers : ${computer}, It's Tie`);
-                }   
-                else  if(computer === 'Scissors'){
-                    // scoreLose++;
-                    result = `You Lose`;
-                    console.log(`Your's : ${value}, Computers :${computer}, You Lose`);
-                }   
-            }
-            //For Scissors Check
-             if(value === 'Scissors'){
-                if(computer === 'Rock'){
-                    // scoreLose++;
-                    result = `You Lose`;
-                    console.log(`Your's : ${value}, Computers : ${computer}, You Lose`);
-                }     
-                else  if(computer === 'Paper'){
-                    // scoreWin++;
-                    result = `You Won`;
-                    console.log(`Your's : ${value}, Computers : ${computer}, You Won`);
-                }   
-                else  if(computer === 'Scissors'){
-                    // scoreTie++;
-                    result = `It's Tie`;
-                    console.log(`Your's : ${value}, Computers :${computer}, It's Tie`);
-                }   
+        let result = '';
+        function pickUser(value) {
+
+            if (value === computer) result = "It's Tie";
+            else if (
+                (value === 'Rock' && computer === 'Scissors') ||
+                (value === 'Paper' && computer === 'Rock') ||
+                (value === 'Scissors' && computer === 'Paper')
+            ) {
+                result = 'You Won';
+            } else {
+                result = 'You Lose';
             }
 
-            if(result === 'You Won'){
-                Score.scoreWin++;
-            }
-            else if(result === 'You Lose'){
-                Score.scoreLose++;
-            }
-            else if(result === `It's Tie`){
-                Score.scoreTie++;
-            }
+            if (result === 'You Won') Score.scoreWin++;
+            else if (result === 'You Lose') Score.scoreLose++;
+            else Score.scoreTie++;
 
-            document.getElementById('display').innerText =`Your's : ${value}, Computers :${computer}, ${result}`;
+            document.getElementById('display').innerText =
+                `You: ${value} | Computer: ${computer} → ${result}`;
+
             checkScore();
         }
 
-        function ResetOut(){
-            displayResult = document.getElementById('display').innerText ='';
-            displayResult = document.getElementById('display1').innerText ='';
-            alert(`The Score is reset.`);
+        function ResetOut() {
+            document.getElementById('display').innerText = '';
+            document.getElementById('display1').innerText = '';
+            alert(`Score Reset Successfully!`);
         }
 
-        //For Score Check Function
-        function checkScore (){
-            
-            //to store in local     
-            localStorage.setItem('Score',JSON.stringify(Score));
-             document.getElementById('display1').innerText =`Won: ${Score.scoreWin} \t  Tie:${Score.scoreTie} \t  Lose:${Score.scoreLose}`;        
+        function checkScore() {
+            localStorage.setItem('Score', JSON.stringify(Score));
+
+            document.getElementById('display1').innerText =
+                `Won: ${Score.scoreWin} | Tie: ${Score.scoreTie} | Lose: ${Score.scoreLose}`;
         }
     </script>
+
 </body>
 </html>
