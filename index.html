@@ -86,97 +86,146 @@
 </head>
 
 <body>
-
-    <h1>Rock Paper Scissors</h1>
-
     <div id="display"></div>
     <div id="display1"></div>
+    <button
+    onclick="pickComputer();
+    pickUser('Rock');
+    // checkScore();
+    ">Rock</button>
 
-    <!-- Buttons with images -->
-    <div class="btn-container">
-        <button onclick="pickComputer(); pickUser('Rock');">
-            <img src="rock.png" alt="Rock">
-            Rock
-        </button>
+    <button 
+    onclick="pickComputer();
+    pickUser('Paper');
+    // checkScore();
+    ">Paper</button>
 
-        <button onclick="pickComputer(); pickUser('Paper');">
-            <img src="paper.png" alt="Paper">
-            Paper
-        </button>
+    <button
+     onclick="pickComputer();
+    pickUser('Scissors');
+    // checkScore();
+    ">Scissors</button>
 
-        <button onclick="pickComputer(); pickUser('Scissors');">
-            <img src="scissors.png" alt="Scissors">
-            Scissors
-        </button>
-    </div>
+    <button onclick="checkScore();"> Check Score</button>
 
-    <button id="reset" onclick="
-        ResetOut(); 
-        scoreLose = scoreTie = scoreWin = 0;
-        checkScore();
-    ">Reset Score</button>
+    <button
+    onclick="
+    ResetOut(); 
+    Score.scoreLose=Score.scoreTie=Score.scoreWin=0;
+    ">Reset</button>
 
     <script>
-        // Scores
-        let scoreWin = scoreTie = scoreLose = 0;
-
-        // Computer pick
-        let computer = '', numberGenerate;
-
-        function pickComputer() {
+        //For Score
+        const Score = JSON.parse(localStorage.getItem('Score'));
+       /* {
+        scoreWin: 0,
+        scoreTie: 0,
+        scoreLose: 0
+        } */
+        
+        //For Computer Random Check
+        let computer ='', numberGenerate;;
+        function pickComputer () {
             numberGenerate = Math.random();
-            if (numberGenerate < 1/3) {
+            if(numberGenerate >= 0 && numberGenerate <=1/3){
                 computer = 'Rock';
-            } else if (numberGenerate < 2/3) {
+                console.log(computer);
+            }
+            else if(numberGenerate >= 1/3 && numberGenerate <= 2/3){
                 computer = 'Paper';
-            } else {
+                console.log(computer);
+            }
+            else if(numberGenerate >= 2/3 && numberGenerate <= 1){
                 computer = 'Scissors';
+                console.log(computer);
             }
         }
 
-        // User pick
-        function pickUser(value) {
-            let result = '';
-
-            // Rock logic
-            if (value === 'Rock') {
-                if (computer === 'Rock') { scoreTie++;  result = "It's Tie"; }
-                else if (computer === 'Paper') { scoreLose++; result = "You Lose"; }
-                else { scoreWin++; result = "You Won"; }
+        let result ='';
+        function pickUser(value){
+        
+            //For Rock check
+            if(value === 'Rock'){
+                if(computer === 'Rock'){
+                    // scoreTie++;
+                    result = `It's Tie`;
+                    console.log(`Your's : ${value}, Computers : ${computer}, It's Tie`);    
+                }     
+                else  if(computer === 'Paper'){
+                    // scoreLose++;
+                    result = `You Lose`;
+                    console.log(`Your's : ${value}, Computers : ${computer}, You Lose`);
+                }   
+                else  if(computer === 'Scissors'){
+                    // scoreWin++;
+                    result = `You Won`;
+                    console.log(`Your's : ${value}, Computers :${computer}, You Won`);
+                }   
+            }
+            //For Paper Check
+             if(value === 'Paper'){
+                if(computer === 'Rock'){
+                    // scoreWin++;
+                    result = `You Won`;
+                    console.log(`Your's : ${value}, Computers : ${computer}, You Won`);
+                }     
+                else  if(computer === 'Paper'){
+                    // scoreTie++;
+                    result = `It's Tie`;
+                    console.log(`Your's : ${value}, Computers : ${computer}, It's Tie`);
+                }   
+                else  if(computer === 'Scissors'){
+                    // scoreLose++;
+                    result = `You Lose`;
+                    console.log(`Your's : ${value}, Computers :${computer}, You Lose`);
+                }   
+            }
+            //For Scissors Check
+             if(value === 'Scissors'){
+                if(computer === 'Rock'){
+                    // scoreLose++;
+                    result = `You Lose`;
+                    console.log(`Your's : ${value}, Computers : ${computer}, You Lose`);
+                }     
+                else  if(computer === 'Paper'){
+                    // scoreWin++;
+                    result = `You Won`;
+                    console.log(`Your's : ${value}, Computers : ${computer}, You Won`);
+                }   
+                else  if(computer === 'Scissors'){
+                    // scoreTie++;
+                    result = `It's Tie`;
+                    console.log(`Your's : ${value}, Computers :${computer}, It's Tie`);
+                }   
             }
 
-            // Paper logic
-            if (value === 'Paper') {
-                if (computer === 'Rock') { scoreWin++; result = "You Won"; }
-                else if (computer === 'Paper') { scoreTie++; result = "It's Tie"; }
-                else { scoreLose++; result = "You Lose"; }
+            if(result === 'You Won'){
+                Score.scoreWin++;
+            }
+            else if(result === 'You Lose'){
+                Score.scoreLose++;
+            }
+            else if(result === `It's Tie`){
+                Score.scoreTie++;
             }
 
-            // Scissors logic
-            if (value === 'Scissors') {
-                if (computer === 'Rock') { scoreLose++; result = "You Lose"; }
-                else if (computer === 'Paper') { scoreWin++; result = "You Won"; }
-                else { scoreTie++; result = "It's Tie"; }
-            }
-
-            // Display result
-            document.getElementById("display").innerText =
-                `You: ${value}, Computer: ${computer}, ${result}`;
-
+            document.getElementById('display').innerText =`Your's : ${value}, Computers :${computer}, ${result}`;
             checkScore();
         }
 
-        // Reset display
-        function ResetOut() {
-            document.getElementById('display').innerText = '';
+        function ResetOut(){
+            displayResult = document.getElementById('display').innerText ='';
+            displayResult = document.getElementById('display1').innerText ='';
+            alert(`The Score is reset.`);
         }
 
-        // Display scores
-        function checkScore() {
-            document.getElementById('display1').innerText =
-                `Won: ${scoreWin}   |   Tie: ${scoreTie}   |   Lose: ${scoreLose}`;
+        //For Score Check Function
+        function checkScore (){
+            
+            //to store in local     
+            localStorage.setItem('Score',JSON.stringify(Score));
+             document.getElementById('display1').innerText =`Won: ${Score.scoreWin} \t  Tie:${Score.scoreTie} \t  Lose:${Score.scoreLose}`;        
         }
     </script>
-
 </body>
 </html>
