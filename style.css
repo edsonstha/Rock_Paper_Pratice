@@ -1,0 +1,88 @@
+/* Combined CSS for a modern look */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: white;
+            min-height: 100vh;
+            padding-top: 40px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-shadow: 0 0 10px rgba(0,0,0,0.5);
+            margin-bottom: 30px;
+        }
+
+        #display, #display1 {
+            width: 80%;
+            max-width: 500px;
+            padding: 15px 20px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            margin-top: 10px;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(6px);
+            box-shadow: 0 0 15px rgba(0,0,0,0.4);
+            text-align: center;
+        }
+        
+        #display1 {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .btn-container {
+            margin-top: 40px;
+            display: flex;
+            gap: 25px;
+        }
+
+        button {
+            /* Styles from the second provided HTML */
+            border-radius: 15px;
+            border: none;
+            padding: 20px 25px;
+            cursor: pointer;
+            background: #fff;
+            box-shadow: 5px 5px 20px rgba(0,0,0,0.3);
+            transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+            width: 160px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        button:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+        }
+
+        button img {
+            width: 60px;
+            margin-bottom: 8px;
+        }
+
+        /* Reset button */
+        #reset {
+            margin-top: 40px;
+            background: #ff5252;
+            color: white;
+            width: 200px;
+            height: 60px; /* Adjust height for the new style */
+            font-size: 1.2rem;
+        }
+
+        #reset:hover {
+            background: #ff0000;
+        }
